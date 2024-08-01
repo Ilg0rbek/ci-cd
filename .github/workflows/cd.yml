@@ -10,12 +10,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3  # Updated to the latest version
 
     - name: Install SSH key
-      uses: webfactory/ssh-agent@v0.5.3
-      with:
-        ssh-private-key: ${{ secrets.KEY }}
+      uses: webfactory/ssh-agent@v0.5.4  # Updated to the latest version
 
     - name: Connect to server and deploy changes
       uses: appleboy/ssh-action@v0.1.7
@@ -32,7 +30,7 @@ jobs:
           # Check if it's a git repository
           if [ ! -d ".git" ]; then
             git init
-            git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
+            git remote add origin https://github.com/ilg0rbek/ci-cd.git
           fi
           
           git pull origin main
