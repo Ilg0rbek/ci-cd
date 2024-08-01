@@ -5,11 +5,20 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install SSH key
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.KEY }}
+
     - name: Connect to server and deploy changes
-      uses: ssh
+      uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
@@ -18,5 +27,5 @@ jobs:
         script: |
           cd /apps/ci-cd
           git pull
-          npm i
+          npm install
           pm2 restart 0
